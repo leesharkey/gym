@@ -100,6 +100,9 @@ class CartPoleEnv(gym.Env):
         return [seed]
 
     def step(self, action):
+        if type(action) is np.ndarray:
+            if len(action)==1:
+                action = action[0]
         err_msg = "%r (%s) invalid" % (action, type(action))
         assert self.action_space.contains(action), err_msg
 
