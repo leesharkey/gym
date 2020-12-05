@@ -1,5 +1,13 @@
 from gym.envs.registration import registry, register, make, spec
 
+# Bandit
+# ----------------------------------------
+register(
+    id='Bandit-v0',
+    entry_point='gym.envs.bandit:BanditEnv',
+    max_episode_steps=200
+)
+
 # Algorithmic
 # ----------------------------------------
 
