@@ -6,38 +6,11 @@ from os import path
 
 
 class BanditEnv(gym.Env):
-    # metadata = {
-    #     'render.modes': ['human', 'rgb_array'],
-    #     'video.frames_per_second': 30
-    # }
-
-    # def __init__(self, g=10.0):
-    #     self.max_speed = 8
-    #     self.max_torque = 2.
-    #     self.dt = .05
-    #     self.g = g
-    #     self.m = 1.
-    #     self.l = 1.
-    #     self.viewer = None
-    #
-    #     high = np.array([1., 1., self.max_speed], dtype=np.float32)
-    #     self.action_space = spaces.Box(
-    #         low=-self.max_torque,
-    #         high=self.max_torque, shape=(1,),
-    #         dtype=np.float32
-    #     )
-    #     self.observation_space = spaces.Box(
-    #         low=-high,
-    #         high=high,
-    #         dtype=np.float32
-    #     )
-    #
-    #     self.seed()
 
     def __init__(self, p_dist_dist_name=None):
 
         self.r_dist = [1, 1]
-        self.p_dist_dist_name = 'FixedEasy' # From 'Dirichlet', 'Dirichlet_support_subset', 'FixedEasy'
+        self.p_dist_dist_name = 'Dirichlet' # From 'Dirichlet', 'Dirichlet_support_subset', 'FixedEasy'
 
         self.n_bandits = len(self.r_dist)
         self.action_space = spaces.Discrete(self.n_bandits)
@@ -75,7 +48,7 @@ class BanditEnv(gym.Env):
 
         info = {'p_dist': self.p_dist}
 
-        return self._get_obs(), reward, False, {}
+        return self._get_obs(), reward, False, info
 
     def _get_obs(self):
         return self.prev_act_and_reward_to_vec(self.prev_act, self.prev_rew)
