@@ -17,7 +17,7 @@ class BanditEnv(gym.Env):
         self.observation_space = spaces.Box(low=0, high=1,
                                             shape=(self.n_bandits + 1,),
                                             dtype=np.float32)
-        self.prev_act, self.prev_rew = 0, 0.
+        self.prev_act, self.prev_rew = None, 0.
 
         # Define the restricted subset of the support of the Dirichlet
         # distribution
@@ -34,7 +34,14 @@ class BanditEnv(gym.Env):
         return [seed]
 
     def step(self, action):
-        action = action[0]
+        if type(action) == np.ndarray:
+            action = action[0]
+        elif type(action) == np.int64 or type(action) == np.int32:
+            pass
+        else:
+            raise ValueError("Action is the wrong type. Is " + \
+                             "{}. Can be np.ndarray ".format(type(action)) + \
+                             "or np.int32 or np.int64")
         assert self.action_space.contains(action)
         reward = 0
 
