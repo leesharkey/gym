@@ -55,7 +55,7 @@ class BanditEnv(gym.Env):
 
     def reset(self):
         self.sample_p_dist_dist()
-        self.prev_act, self.prev_rew = 0, 0.
+        self.prev_act, self.prev_rew = None, 0.
         return self._get_obs()
 
     def to_one_hot(self, idx):
@@ -64,7 +64,10 @@ class BanditEnv(gym.Env):
         return one_hot_vec
 
     def prev_act_and_reward_to_vec(self, prev_act, reward):
-        one_hot_act = self.to_one_hot(prev_act)
+        if prev_act is None:
+            one_hot_act = np.zeros(2)
+        else:
+            one_hot_act = self.to_one_hot(prev_act)
         one_hot_act_and_rew = np.append(one_hot_act, reward)
         # print(one_hot_act_and_rew)
         return one_hot_act_and_rew
