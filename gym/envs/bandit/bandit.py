@@ -90,32 +90,3 @@ class BanditEnv(gym.Env):
             self.p_dist = np.array([0.9, 0.1])
         else:
             raise ValueError("Invalid distribution name for bandits")
-
-    # def step(self, u):
-    #     th, thdot = self.state  # th := theta
-    #
-    #     g = self.g
-    #     m = self.m
-    #     l = self.l
-    #     dt = self.dt
-    #
-    #     u = np.clip(u, -self.max_torque, self.max_torque)[0]
-    #     self.last_u = u  # for rendering
-    #     costs = angle_normalize(th) ** 2 + .1 * thdot ** 2 + .001 * (u ** 2)
-    #
-    #     newthdot = thdot + (-3 * g / (2 * l) * np.sin(th + np.pi) + 3. / (m * l ** 2) * u) * dt
-    #     newth = th + newthdot * dt
-    #     newthdot = np.clip(newthdot, -self.max_speed, self.max_speed)
-    #
-    #     self.state = np.array([newth, newthdot])
-    #     return self._get_obs(), -costs, False, {}
-
-    # def reset(self):
-    #     high = np.array([np.pi, 1])
-    #     self.state = self.np_random.uniform(low=-high, high=high)
-    #     self.last_u = None
-    #     return self._get_obs()
-    #
-    # def _get_obs(self):
-    #     theta, thetadot = self.state
-    #     return np.array([np.cos(theta), np.sin(theta), thetadot])
