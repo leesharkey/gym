@@ -43,7 +43,10 @@ class BanditEnv(gym.Env):
                              "{}. Can be np.ndarray ".format(type(action)) + \
                              "or np.int32 or np.int64")
         assert self.action_space.contains(action)
-        reward = 0
+
+        # By default, the agent is punished unless it chooses the correct
+        # action.
+        reward = -1 / (self.n_bandits - 1)
 
         if np.random.uniform() < self.p_dist[action]:
             if not isinstance(self.r_dist[action], list):
